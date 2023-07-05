@@ -54,7 +54,7 @@
             <td th:text="${project.intro}"></td>
             <td th:text="${project.startDate}"></td>
             <td th:text="${project.endDate}"></td>
-            <td th:text="${project.status}"></td>
+            <td th:text="${project.status == 0 ? 'Pre' : (project.status == 1 ? 'Start' : (project.status == 3 ? 'End' : ''))}"></td>
             <td>
                 <form th:action="@{/projects/details/{id}(id=${project.id})}" method="get">
                     <button type="submit" class="btn btn-info">View Details</button>
