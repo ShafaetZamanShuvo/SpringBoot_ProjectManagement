@@ -34,25 +34,25 @@ public class ProjectController {
     }
 
     @GetMapping // GET /projects
-        public String listProjects(Model model) {
-            model.addAttribute("projects", projectService.getAllProjects());
-            return "projects";
-        }
+    public String listProjects(Model model) {
+        model.addAttribute("projects", projectService.getAllProjects());
+        return "projects";
+    }
     @GetMapping("/new") // GET /projects/new
-        public String createProjectForm(Model model) {
-            // create project object to hold project form data
-            Project project = new Project();
-            model.addAttribute("project", project);
-            model.addAttribute("users", userService.getAllUsers());
-            return "new-project";
-        }
+    public String createProjectForm(Model model) {
+        // create project object to hold project form data
+        Project project = new Project();
+        model.addAttribute("project", project);
+        model.addAttribute("users", userService.getAllUsers());
+        return "new-project";
+    }
 
     @PostMapping("/projects") // POST /projects
-        public String saveProject(Project project, Model model) {
-            // save project to database
-            projectService.saveProject(project);
-            return "redirect:/projects";
-        }
+    public String saveProject(Project project, Model model) {
+        // save project to database
+        projectService.saveProject(project);
+        return "redirect:/projects";
+    }
 
     @PostMapping
     public String saveProject(@ModelAttribute("project") Project project,
@@ -238,11 +238,11 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
-        @GetMapping("/generateReport")
-        public String generateReport() throws JRException, FileNotFoundException {
-            return reportService.getReport();
+    @GetMapping("/generateReport")
+    public String generateReport() throws JRException, FileNotFoundException {
+        return reportService.getReport();
 
-        }
+    }
 
 
 
