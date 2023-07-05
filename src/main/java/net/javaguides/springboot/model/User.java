@@ -54,7 +54,6 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.projects = projects;
 	}
 	public Long getId() {
 		return id;

@@ -48,7 +48,11 @@
             <th>Actions</th>
         </tr>
         </thead>
+
         <tbody>
+        <div th:if = "${projects.size() == 0}" align="center">
+            <h3>No projects found. Create One !!!</h3>
+        </div>
         <tr  th:each= "project : ${projects}" >
             <td th:text="${project.name}"></td>
             <td th:text="${project.intro}"></td>
