@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Project Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+</head>
+
+
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Projects</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn btn-logout" type="submit" style="background-color: black; color: white" >Logout</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Project Details</h1>
+  <div th:if="${param.success}" class="alert alert-success">
+    <p>Project Updated!</p>
+  </div>
+  <form th:object="${project}">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" th:value="${project.name}" disabled>
+    </div>
+    <div class="form-group">
+      <label for="intro">Introduction:</label>
+      <input type="text" class="form-control" id="intro" name="intro" th:value="${project.intro}" disabled>
+    </div>
+    <div class="form-group">
+      <label for="owner">Owner:</label>
+      <input type="text" class="form-control" id="owner" name="owner" th:value="${project.owner.username}" disabled>
+    </div>
+    <div class="form-group">
+      <label for="start-date">Start Date:</label>
+      <input type="date" class="form-control" id="start-date" name="start-date" th:value="${project.startDate}" disabled>
+    </div>
+    <div class="form-group">
+      <label for="end-date">End Date:</label>
+      <input type="date" class="form-control" id="end-date" name="end-date" th:value="${project.endDate}" disabled>
+    </div>
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <input type="text" class="form-control" id="status" name="status" th:value="${project.status}" disabled>
+    </div>
+    <div class="form-group">
+      <label>Members:</label>
+      <div th:if="${#lists.isEmpty(members)}">
+        <p>No members</p>
+      </div>
+      <div th:unless="${#lists.isEmpty(members)}">
+        <table class="table">
+          <tbody>
+          <tr th:each="member : ${members}">
+            <td th:text="${member.username}" th:align="center"></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <a th:if="${isOwner}" th:with="projectId=${project.id}" th:href="@{/projects/edit/{id} (id=${projectId})}" class="btn btn-primary mr-2">Update</a>
+      <a th:if="${isOwner}" th:with="projectId=${project.id}" th:href="@{/projects/{id} (id=${projectId})}" class="btn btn-danger mr-2" onclick="return confirmDelete()">Delete</a>
+      <a th:href="@{/projects}" class="btn btn-secondary">Back</a>
+    </div>
+  </form>
+</div>
+<script>
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this project?");
+  }
+</script>
+</body>
+</html>

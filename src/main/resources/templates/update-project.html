@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Update Project</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 50px auto;
+            width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea, input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            border: none;
+            box-shadow: 0px 0px 5px #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Projects</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-logout" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <h1>Create Project</h1>
+    <form th:action="@{/projects/{id} (id=${project.id}) }"  th:object="${project}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="intro">Introduction:</label>
+            <textarea id="intro" name="intro" th:field="*{intro}" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date" th:field="*{startDate}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date" th:field="*{endDate}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="members">Members:</label>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Member Name</th>
+                    <th>Member Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${project.members}">
+                    <td th:text="${member.username}"></td>
+                    <td th:text="${member.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <label>Assign Members:</label>
+            <a th:href="@{/projects/{id}/addMember (id=${project.id}) }" class="btn btn-primary">Assign Members</a>
+        </div>
+        <div class="form-group">
+            <label>Remove Members:</label>
+            <a th:href="@{/projects/{id}/removeMember (id=${project.id}) }" class="btn btn-danger">Remove Members</a>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-success">
+        </div>
+    </form>
+    <script>
+        document.getElementById("start-date").addEventListener("change", checkDate);
+        document.getElementById("end-date").addEventListener("change", checkDate);
+
+        function checkDate() {
+            var startDate = document.getElementById("start-date").value;
+            var endDate = document.getElementById("end-date").value;
+            if (startDate > endDate) {
+                alert("Start date must be before end date");
+                document.getElementById("start-date").value = "";
+                document.getElementById("end-date").value = "";
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

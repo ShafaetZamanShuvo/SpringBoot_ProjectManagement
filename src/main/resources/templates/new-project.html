@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Create Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        select option::before {
+            content: "";
+            display: none;
+        }
+        .btn-logout {
+            background-color: black;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Projects</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-logout" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h1 class="text-center">Create Project</h1>
+    <form th:action="@{/projects/}" th:object="${project}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" class="form-control" autofocus="autofocus" required >
+        </div>
+        <div class="form-group">
+            <label for="intro">Introduction:</label>
+            <textarea id="intro" name="intro" th:field="*{intro}" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="start-date">Start Date:</label>
+            <input type="date" id="start-date" name="start-date" th:field="*{startDate}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="end-date">End Date:</label>
+            <input type="date" id="end-date" name="end-date" th:field="*{endDate}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="memberIds">Assign Members:</label>
+            <select id="memberIds" name="memberIds" multiple class="form-control">
+                <th:block th:each="user : ${users}">
+                    <option th:value="${user.id}" th:text="${user.username}"></option>
+                </th:block>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+    <script th:inline="javascript">
+        document.getElementById("memberIds").addEventListener("change", limitSelection);
+        document.getElementById("start-date").addEventListener("change", checkDate);
+        document.getElementById("end-date").addEventListener("change", checkDate);
+        function limitSelection() {
+            var limit = 5;
+            var memberIds = document.getElementById("memberIds");
+            var selectedOptions = memberIds.selectedOptions;
+            if (selectedOptions.length > limit) {
+                alert("You can only select a maximum of " + limit + " members");
+                //only the last selected option will be unselected
+                selectedOptions[selectedOptions.length - 1].selected = false;
+            }
+        }
+        function checkDate() {
+            var startDate = document.getElementById("start-date").value;
+            var endDate = document.getElementById("end-date").value;
+            //if start date is not null
+            if (startDate) {
+                if (startDate > endDate) {
+                    alert("Start date must be before end date");
+                    document.getElementById("start-date").value = "";
+                    document.getElementById("end-date").value = "";
+                }
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

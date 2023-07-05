@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Add Members</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .btn-logout {
+      background-color: black;
+      color: #fff;
+    }
+    /* CSS styles */
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Projects</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn btn-logout" type="submit">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <form th:action="@{/projects/{id}/addMember (id=${project.id}) }" th:object="${project}" method="post" id="projectForm">
+    <h1>Add Members</h1>
+    <th:block id="added-members" th:each="user : ${users}">
+      <div class="form-check">
+        <input id="member-selected" th:if="${members.contains(user)}" class="form-check-input" name="added-members" type="checkbox" th:value="${user.getId()}" th:text="${user.username}" th:checked="${members.contains(user)}" disabled>
+        <input id="member-unselected" th:unless="${members.contains(user)}" class="form-check-input" name="added-members" type="checkbox" th:value="${user.getId()}" th:text="${user.username}" th:checked="${members.contains(user)}" onclick="limitSelection()">
+      </div>
+    </th:block>
+    <input type="submit" value="Add" class="btn btn-primary">
+  </form>
+  <script th:inline="javascript">
+    function limitSelection() {
+      //get the number of check boxes which are disabled
+      var disabled = document.querySelectorAll('#member-selected:checked').length;
+      var checkboxes = document.querySelectorAll('#member-unselected:checked');
+      console.log(checkboxes);
+      if (checkboxes.length + disabled > 5) {
+        checkboxes[checkboxes.length - 1].checked = false;
+      }
+    }
+  </script>
+</div>
+</body>
+</html>
