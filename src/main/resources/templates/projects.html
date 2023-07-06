@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <title>Projects</title>
+    <title>Task List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
@@ -10,6 +10,19 @@
         .btn-logout {
             background-color: black;
             color: #fff;
+        }
+        .task-container {
+            margin-top: 20px;
+        }
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .task button {
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -30,50 +43,25 @@
     </div>
 </nav>
 <div class="container mt-4">
-    <form class="form-inline mb-3" th:action="@{/projects/date}" method="get">
-        <label for="start-date-filter" class="mr-2">Start Date:</label>
-        <input type="date" id="start-date-filter" name="startDate" class="form-control mr-2" required>
-        <label for="end-date-filter" class="mr-2">End Date:</label>
-        <input type="date" id="end-date-filter" name="endDate" class="form-control mr-2" required>
-        <button type="submit" class="btn btn-primary">Filter</button>
-    </form>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Introduction</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <div th:if = "${projects.size() == 0}" align="center">
-            <h3>No projects found. Create One !!!</h3>
+    <h1>Task List</h1>
+    <div class="task-container">
+        <div class="task">
+            <span>Task 1</span>
+            <button class="btn btn-primary">Update</button>
         </div>
-        <tr  th:each= "project : ${projects}" >
-            <td th:text="${project.name}"></td>
-            <td th:text="${project.intro}"></td>
-            <td th:text="${project.startDate}"></td>
-            <td th:text="${project.endDate}"></td>
-            <td th:text="${project.status == 0 ? 'Pre' : (project.status == 1 ? 'Start' : (project.status == 3 ? 'End' : ''))}"></td>
-            <td>
-                <form th:action="@{/projects/details/{id}(id=${project.id})}" method="get">
-                    <button type="submit" class="btn btn-info">View Details</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <form th:action="@{/projects/new}" method="get">
-        <button type="submit" class="btn btn-success mb-3">Create Project</button>
-    </form>
-    <form th:action="@{/projects/generateReport}" method="get">
-        <button type="submit" class="btn btn-primary">Generate Report</button>
-    </form>
+        <div class="task">
+            <span>Task 2</span>
+            <button class="btn btn-primary">Update</button>
+        </div>
+        <div class="task">
+            <span>Task 3</span>
+            <button class="btn btn-primary">Update</button>
+        </div>
+        <!-- Add more tasks here -->
+    </div>
+    <button id="create-task-btn" class="btn btn-primary" style="margin-top: 10px; align-self: center">Create task</button>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>

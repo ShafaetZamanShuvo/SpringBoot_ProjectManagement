@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management System</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-size: 14px;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<nav style="margin-top: 0" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Project</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container mt-5">
+  <h1>Task Management System</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <form>
+        <div class="form-group">
+          <label for="taskName">Name</label>
+          <input type="text" class="form-control" id="taskName" placeholder="Enter task name">
+        </div>
+        <div class="form-group">
+          <label for="taskDescription">Description</label>
+          <textarea class="form-control" id="taskDescription" rows="3"
+                    placeholder="Enter task description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="taskStatus">Status</label>
+          <select class="form-control" id="taskStatus">
+            <option value="in progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="taskPriority">Priority</label>
+          <select class="form-control" id="taskPriority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="taskDueDate">Due Date</label>
+          <input type="date" class="form-control" id="taskDueDate">
+        </div>
+        <div class="form-group">
+          <label for="taskAssignedTo">Assigned To</label>
+          <select class="form-control" id="taskAssignedTo" multiple>
+            <option value="user1">User 1</option>
+            <option value="user2">User 2</option>
+            <option value="user3">User 3</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Task</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

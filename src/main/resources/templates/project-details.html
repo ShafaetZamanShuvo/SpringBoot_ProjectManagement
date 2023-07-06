@@ -78,6 +78,7 @@
       </div>
     </div>
     <div class="d-flex justify-content-end">
+      <a th:if="${isOwner}" th:with="projectId=${project.id}" href=# class="btn btn-primary mr-2">Assign Tasks</a>
       <a th:if="${isOwner}" th:with="projectId=${project.id}" th:href="@{/projects/edit/{id} (id=${projectId})}" class="btn btn-primary mr-2">Update</a>
       <a th:if="${isOwner}" th:with="projectId=${project.id}" th:href="@{/projects/{id} (id=${projectId})}" class="btn btn-danger mr-2" onclick="return confirmDelete()">Delete</a>
       <a th:href="@{/projects}" class="btn btn-secondary">Back</a>
