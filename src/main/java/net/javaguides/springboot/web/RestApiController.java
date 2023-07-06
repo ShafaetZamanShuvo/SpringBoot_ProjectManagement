@@ -5,6 +5,7 @@ import net.javaguides.springboot.model.User;
 import net.javaguides.springboot.service.ProjectService;
 import net.javaguides.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class RestApiController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/v1/projects")
+    @GetMapping(value = "/v1/projects",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Project> getProjects()
     {
@@ -30,7 +31,7 @@ public class RestApiController {
         return projects;
     }
 
-    @GetMapping("/v1/users")
+    @GetMapping(value = "/v1/users", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<User> getUsers()
     {
