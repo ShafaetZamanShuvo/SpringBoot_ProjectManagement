@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Remove Members</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* CSS styles */
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-logout {
+      background-color: black;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Projects</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <form th:action="@{/logout}" method="post">
+          <button class="btn btn-logout" type="submit">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <form th:action="@{/projects/changeOwner/{id} (id=${project.id}) }" th:object="${project}" method="post" id="projectForm">
+    <h1>Change Owner</h1>
+    <div class="form-group">
+      <label for="newOwner">Change Ownership:</label>
+      <select class="form-control" name="newOwner" id="newOwner">
+        <option th:each="owner : ${members}" th:value="${owner.id}" th:text="${owner.username}"></option>
+      </select>
+      <button class="btn btn-primary mt-3">Change</button>
+    </div>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

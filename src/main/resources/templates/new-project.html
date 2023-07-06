@@ -52,10 +52,8 @@
         </div>
         <div class="form-group">
             <label for="memberIds">Assign Members:</label>
-            <select id="memberIds" name="memberIds" multiple class="form-control">
-                <th:block th:each="user : ${users}">
-                    <option th:value="${user.id}" th:text="${user.username}"></option>
-                </th:block>
+            <select class="form-control" id="memberIds" name="memberIds" multiple>
+                    <option  th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"></option>
             </select>
         </div>
         <button type="submit" class="btn btn-success">Create</button>

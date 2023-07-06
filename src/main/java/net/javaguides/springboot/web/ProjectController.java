@@ -244,6 +244,30 @@ public class ProjectController {
 
     }
 
+    @GetMapping("/changeOwner/{id}")
+    public String changeOwnerForm(@PathVariable Long id, Model model) {
+        model.addAttribute("project", projectService.getProjectById(id));
+        List<User> members = projectService.getProjectById(id).getMembers();
+        model.addAttribute("members", members);
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "change-owner";
+    }
+
+    @PostMapping("/changeOwner/{id}")
+    public String changeOwner(@PathVariable Long id,
+                              @RequestParam(name = "newOwner", required = false) Long newOwnerId) {
+        System.out.println("Coming here");
+        Project project = projectService.getProjectById(id);
+        User newOwner = userService.getUserById(newOwnerId);
+        System.out.println(newOwner.getUsername());
+        project.setOwner(newOwner);
+        projectService.saveProject(project);
+
+        return "redirect:/projects";
+
+    }
+
 
 
 
